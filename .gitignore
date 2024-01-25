@@ -92,7 +92,7 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 ### dotenv template
-.env
+mysite/.env
 
 ### Django template
 *.log
@@ -231,7 +231,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+mysite/.env
 .venv
 env/
 venv/

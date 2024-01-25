@@ -1,0 +1,94 @@
+{% load static %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <style>
+        table, th, thead{
+            text-align: center;
+            vertical-align : middle;
+        }
+    </style>
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th><abbr title="업소 명">업소 명</abbr></th>
+                        <th><abbr>읍면동</abbr></th>
+                        <th><abbr>업종 명</abbr></th>
+                        <th><abbr>도로명 주소</abbr></th>
+                        <th><abbr>업소 전화번호</abbr></th>
+                        <th><abbr>품목 내용</abbr></th>
+                        <th><abbr>기타 내용</abbr></th>
+                        <th><abbr>등록 일시</abbr></th>
+                        <th class="has-text-centered"><abbr>위도</abbr></th>
+                        <th class="has-text-centered"><abbr>경도</abbr></th>
+                        <th><abbr>데이터 코드</abbr></th>
+                        <th><abbr>선정 연도</abbr></th>
+                        <th><abbr>선정 월</abbr></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in data.items %}
+                        <tr>
+                            <td><a href="https://map.naver.com/p/search/{{ item.rnAdres }}"
+                                   target="_blank">{{ item.bsshNm }}</a>
+                            </td>
+                            <td>{{ item.emdNM }}</td>
+                            <td>{{ item.indutyNm }}</td>
+                            <td>{{ item.rnAdres }}</td>
+                            <td>{{ item.bsshTelno }}</td>
+                            <td>{{ item.prdlstCn }}</td>
+                            <td>{{ item.etcCn }}</td>
+                            <td>{{ item.regDt }}</td>
+                            <td>{{ item.laCrdnt }}</td>
+                            <td>{{ item.loCrdnt }}</td>
+                            <td>{{ item.dataCd }}</td>
+                            <td>{{ item.slctnYr }}</td>
+                            <td>{{ item.slctnMm }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</section>
+<nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">
+    {% if data.page_no > 1 %}
+        <a class="pagination-previous" href="?pageNo={{ data.page_no | add:-1 }}">이전 페이지</a>
+    {% else %}
+        <a class="pagination-previous" disabled>이전 페이지</a>
+    {% endif %}
+    <a class="pagination-next" href="?pageNo={{ data.page_no | add:1 }}">다음 페이지</a>
+    <ul class="pagination-list">
+        {% if data.page_no > 1 %}
+            <li><a class="pagination-link" aria-label="Goto_page_1" href="?pageNo=1">1</a></li>
+        {% endif %}
+        {% if data.page_no > 2 %}
+            <li><a class="pagination-link" aria-label="Goto_page_2" href="?pageNo=2">2</a></li>
+        {% endif %}
+        {% if data.page_no > 3 %}
+            <li><span class="pagination-ellipsis">&hellip;</span></li>
+        {% endif %}
+        <li><a class="pagination-link is-current" aria-label="Page_current" aria-current="page">{{ data.page_no }}</a></li>
+        {% if data.end_page_number != data.page_no %}
+            <li><a class="pagination-link" aria-label="Goto_next_page" href="?pageNo={{ data.page_no | add:1 }}">{{ data.page_no | add:1 }}</a></li>
+            <li><span class="pagination-ellipsis">&hellip;</span></li>
+        <li><a class="pagination-link" aria-label="Goto_page_last" href="?pageNo={{ data.end_page_number }}">{{ data.end_page_number }}</a></li>
+        {% endif %}
+
+    </ul>
+</nav>
+
+</body>
+</html>
